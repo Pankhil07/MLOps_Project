@@ -16,4 +16,3 @@ We plan on using the [OPUS Books](https://huggingface.co/datasets/opus_books) da
 
 We plan to use pre-trained models. Since we are working on a translation task one of the models we plan to use is OPUS-MT-en-it. 
 
->>>>>>> 763f32c195518df0c3c10f012674d298de914113
