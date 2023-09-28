@@ -1,6 +1,4 @@
-<<<<<<< HEAD
-MLOps_Project_Pankhil/
-=======
+
 # MLOps_Project_Pankhil: Language Translation using Transformer 
 Pankhil Gawade 
 
