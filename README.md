@@ -1,5 +1,5 @@
 
-# MLOps_Project_Pankhil: Language Translation using Transformer 
+# MLOps_Project: Language Translation using Transformer 
 Pankhil Gawade 
 
 ##  Overall goal of the project 
