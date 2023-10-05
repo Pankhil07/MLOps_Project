@@ -90,3 +90,5 @@ target/
 # Mypy cache
 .mypy_cache/
 /data
+/opus-mt-en-it
+opus-mt-en-it/

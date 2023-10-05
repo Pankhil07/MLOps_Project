@@ -31,3 +31,4 @@ transformers==4.33.3
 urllib3_secure_extra==0.1.0
 zipp==3.13.0
 zstandard==0.21.0
+sacrebleu==2.3.1
