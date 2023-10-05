@@ -1,11 +1,15 @@
 import torch
-from data import tokenizer, train_set,test_set,validation_set,raw_dataset
+import sys
+import os
+sys.path.append(os.path.join(os.getcwd(), "src"))
+from data.data import tokenizer, train_set,test_set,validation_set,raw_dataset
 
 prefix = ""
 max_input_length = 128
 max_target_length  = 128
 source_lang = "en"
 target_lang = "it"
+
 def preprocess_function(examples):
     inputs = [prefix+ex[source_lang] for ex in examples["translation"]]
     targets = [ex[target_lang]for ex in examples["translation"]]

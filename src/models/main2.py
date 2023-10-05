@@ -1,7 +1,12 @@
+import sys
+import os
 from transformers import AutoModelForSeq2SeqLM, DataCollatorForSeq2Seq, Seq2SeqTrainingArguments, Seq2SeqTrainer
-from data import tokenizer,metric
+sys.path.append(os.path.join(os.getcwd(), "src"))
+from data.data import tokenizer,metric
 from tokenizer import source_lang,target_lang,tokenized_datasets_train,tokenized_datasets_test
-model_checkpoint ="/home/pankhil/PycharmProjects/MLOps/opus-mt-en-it"
+
+model_checkpoint = os.path.join(os.getcwd(), "opus-mt-en-it")
+# model_checkpoint ="/home/pankhil/PycharmProjects/MLOps/opus-mt-en-it"
 model = AutoModelForSeq2SeqLM.from_pretrained(model_checkpoint)
 
 
