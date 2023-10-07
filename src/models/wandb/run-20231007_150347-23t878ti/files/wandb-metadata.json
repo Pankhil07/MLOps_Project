@@ -1,0 +1,53 @@
+{
+    "os": "Windows-10-10.0.22000-SP0",
+    "python": "3.11.6",
+    "heartbeatAt": "2023-10-07T13:03:50.998449",
+    "startedAt": "2023-10-07T13:03:47.739925",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "C:\\Users\\Admin\\PycharmProjects\\MLOps_Project\\src\\models\\main2.py",
+    "codePathLocal": "main2.py",
+    "codePath": "src\\models\\main2.py",
+    "git": {
+        "remote": "https://github.com/Pankhil07/MLOps_Project.git",
+        "commit": "d35641362a0743f47ddd721f2b5c09179673dcf6"
+    },
+    "email": null,
+    "root": "C:/Users/Admin/PycharmProjects/MLOps_Project",
+    "host": "Pankhil",
+    "username": "Admin",
+    "executable": "C:\\Users\\Admin\\PycharmProjects\\MLOps_Project\\venv\\Scripts\\python.exe",
+    "cpu_count": 4,
+    "cpu_count_logical": 8,
+    "cpu_freq": {
+        "current": 1600.0,
+        "min": 0.0,
+        "max": 1800.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 1600.0,
+            "min": 0.0,
+            "max": 1800.0
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 447.1150550842285,
+            "used": 388.16999435424805
+        }
+    },
+    "gpu": "NVIDIA GeForce MX130",
+    "gpu_count": 1,
+    "gpu_devices": [
+        {
+            "name": "NVIDIA GeForce MX130",
+            "memory_total": 2147483648
+        }
+    ],
+    "memory": {
+        "total": 7.889942169189453
+    }
+}

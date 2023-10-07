@@ -1,0 +1,16 @@
+src_path: src
+dataset_name: opus_books
+source_language: en
+target_language: it
+train_ratio: 0.8
+validation_ratio: 0.1
+test_ratio: 0.1
+model_name: Helsinki-NLP/opus-mt-en-it
+max_input_length: 128
+max_target_length: 128
+wandb_api_key: 51444d17389535db95f0e83e403f2080038ccfc5
+batch_size: 15
+num_train_epochs: 1
+learning_rate: 2.0e-05
+weight_decay: 0.01
+save_total_limit: 3
