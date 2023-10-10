@@ -12,12 +12,15 @@ import random
 from  hydra.experimental import initialize, compose
 import yaml
 import hydra
+import cProfile
+import re
+
 #raw_dataset = load_dataset(config['dataset_name'],f"{config['source_language']}-{config['target_language']}")
 #raw_dataset= load_dataset("opus_books", "en-it")
 #metric = load_metric("sacrebleu")
 
 # Define these variables at the module level
-
+#with torch.profiler.profiler(...) as prof:
 # Load configuration from the YAML file
 with initialize(config_path="../../conf"):
     cfg = compose(config_name="config.yml")
@@ -30,39 +33,67 @@ raw_dataset = load_dataset(cfg.dataset_name, f"{cfg.source_language}-{cfg.target
 #raw_dataset = load_dataset(cfg.dataset_name"opus_books", "en-it")
 metric = load_metric("sacrebleu")
 
+def split_data(raw_dataset,cfg):
+    train_ratio = cfg.train_ratio
+    validation_ratio = cfg.validation_ratio
+    test_ratio = cfg.test_ratio
+    # Calculate the number of examples for each split
+    all_data = raw_dataset["train"]
+    total_examples = len(all_data)
+    used_examples = 100
+
+    train_size = int(train_ratio * used_examples)
+    validation_size = int(validation_ratio * used_examples)
+    test_size = used_examples - train_size
+
+    # Split the dataset
+    train_set = Dataset.from_dict(all_data[:train_size])
+    validation_set = Dataset.from_dict(all_data[train_size:train_size + validation_size])
+    test_set = Dataset.from_dict(all_data[train_size:min(used_examples, total_examples)])
+
+    dataset_dict = DatasetDict({
+        "train": train_set,
+        "validation": validation_set,
+        "test": test_set
+    })
+
+    return train_set,validation_set,test_set
+
+#plit_data(raw_dataset,cfg)
 # Define your split ratios
-train_ratio = cfg.train_ratio
-validation_ratio = cfg.validation_ratio
-test_ratio = cfg.test_ratio
+#train_ratio = cfg.train_ratio
+#validation_ratio = cfg.validation_ratio
+#test_ratio = cfg.test_ratio
 
 # Calculate the number of examples for each split
-all_data = raw_dataset["train"]
-total_examples = len(all_data)
-used_examples = 500
+#all_data = raw_dataset["train"]
+#total_examples = len(all_data)
+#used_examples = 100
 
-train_size = int(train_ratio * used_examples)
-validation_size = int(validation_ratio * used_examples)
-test_size = used_examples - train_size
+#train_size = int(train_ratio * used_examples)
+#validation_size = int(validation_ratio * used_examples)
+#test_size = used_examples - train_size
 
 # Split the dataset
-train_set = Dataset.from_dict(all_data[:train_size])
-validation_set = Dataset.from_dict(all_data[train_size:train_size + validation_size])
-test_set = Dataset.from_dict(all_data[train_size:min(used_examples, total_examples)])
+#train_set = Dataset.from_dict(all_data[:train_size])
+#validation_set = Dataset.from_dict(all_data[train_size:train_size + validation_size])
+#test_set = Dataset.from_dict(all_data[train_size:min(used_examples, total_examples)])
 
 # Create a DatasetDict to store the splits
-dataset_dict = DatasetDict({
-    "train": train_set,
-    "validation": validation_set,
-    "test": test_set
-})
+#dataset_dict = DatasetDict({
+#    "train": train_set,
+#    "validation": validation_set,
+#    "test": test_set
+#})
 
 # Print the number of examples in each split
-print("Training Set:", len(dataset_dict["train"]))
-print("Validation Set:", len(dataset_dict["validation"]))
-print("Testing Set:", len(dataset_dict["test"]))
+#print("Training Set:", len(dataset_dict["train"]))
+#print("Validation Set:", len(dataset_dict["validation"]))
+#print("Testing Set:", len(dataset_dict["test"]))
 
 # Load the tokenizer using the configuration
 tokenizer = AutoTokenizer.from_pretrained(cfg.model_name)
+
 
 #__all__ = ["train_set", "validation_set", "test_set", "tokenizer"]
 
