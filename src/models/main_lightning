@@ -1,0 +1,92 @@
+import os
+import torch
+import pytorch_lightning as pl
+import numpy as np
+from transformers import AutoModelForSeq2SeqLM, AutoTokenizer, DataCollatorForSeq2Seq
+from datasets import load_metric
+from omegaconf import DictConfig, OmegaConf
+from hydra.experimental import initialize, compose
+
+# Load configuration using Hydra and OmegaConf
+with initialize(config_path="../../conf"):
+    cfg = compose(config_name="config.yml")
+config = OmegaConf.to_container(cfg)
+
+# Model Definition
+class Seq2SeqLightningModel(pl.LightningModule):
+    def __init__(self, model_name, tokenizer, learning_rate=2e-5, weight_decay=0.0):
+        super(Seq2SeqLightningModel, self).__init__()
+        self.model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
+        self.tokenizer = tokenizer
+        self.learning_rate = learning_rate
+        self.weight_decay = weight_decay
+        self.metric = load_metric("sacrebleu")
+
+    def forward(self, input_ids, attention_mask=None, decoder_input_ids=None, decoder_attention_mask=None, labels=None):
+        return self.model(
+            input_ids,
+            attention_mask=attention_mask,
+            decoder_input_ids=decoder_input_ids,
+            decoder_attention_mask=decoder_attention_mask,
+            labels=labels,
+        )
+
+    def training_step(self, batch, batch_idx):
+        outputs = self(**batch)
+        loss = outputs.loss
+        return loss
+
+    def validation_step(self, batch, batch_idx):
+        outputs = self(**batch)
+        val_loss = outputs.loss
+        return {"val_loss": val_loss}
+
+    def validation_epoch_end(self, outputs):
+        avg_loss = torch.stack([x['val_loss'] for x in outputs]).mean()
+        self.log('avg_val_loss', avg_loss, prog_bar=True)
+        return {'val_loss': avg_loss}
+
+    def configure_optimizers(self):
+        optimizer = torch.optim.AdamW(self.parameters(), lr=self.learning_rate, weight_decay=self.weight_decay)
+        return optimizer
+
+# Data Module Definition
+class Seq2SeqDataModule(pl.LightningDataModule):
+    def __init__(self, train_dataset, val_dataset, tokenizer, batch_size=32):
+        super(Seq2SeqDataModule, self).__init__()
+        self.train_dataset = train_dataset
+        self.val_dataset = val_dataset
+        self.tokenizer = tokenizer
+        self.batch_size = batch_size
+        self.data_collator = DataCollatorForSeq2Seq(tokenizer, model=model)
+
+    def train_dataloader(self):
+        return DataLoader(self.train_dataset, batch_size=self.batch_size, collate_fn=self.data_collator)
+
+    def val_dataloader(self):
+        return DataLoader(self.val_dataset, batch_size=self.batch_size, collate_fn=self.data_collator)
+
+# Main Training Logic
+def main():
+    # Load tokenizer and datasets
+    tokenizer = AutoTokenizer.from_pretrained(config["model_name"])
+    tokenized_datasets_train = ...  # Your training dataset
+    tokenized_datasets_val = ...    # Your validation dataset
+
+    # Initialize the Lightning Module and Data Module
+    seq2seq_model = Seq2SeqLightningModel(config["model_name"], tokenizer, config["learning_rate"], config["weight_decay"])
+    data_module = Seq2SeqDataModule(tokenized_datasets_train, tokenized_datasets_val, tokenizer, config["batch_size"])
+
+    # Initialize the Trainer and train the model
+    trainer = pl.Trainer(
+        max_epochs=config["num_train_epochs"],
+        gpus=1 if torch.cuda.is_available() else 0,
+        progress_bar_refresh_rate=20,
+    )
+    trainer.fit(seq2seq_model, datamodule=data_module)
+
+    # Save the model
+    seq2seq_model.model.save_pretrained("./model.pt")
+
+if __name__ == "__main__":
+    main()
