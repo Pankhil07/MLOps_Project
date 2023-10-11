@@ -39,11 +39,11 @@ RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
 
 RUN mkdir /root/project1
 WORKDIR /root/project1
-
-COPY src/models/config.yml /root/project1/src/models/
-COPY src/models/main2.py /root/project1/src/models/
-COPY src/models/tokenizer.py /root/project1/src/models/
-COPY src/models/data.py /root/project1/src/models/
+COPY src/ /root/project1/src
+#COPY src/models/config.yml /root/project1/src/models/
+#COPY src/models/main2.py /root/project1/src/models/
+#COPY src/models/tokenizer.py /root/project1/src/models/
+#COPY src/models/data.py /root/project1/src/models/
 #COPY src/models/config.yml /root/project1/src/models/
 #COPY src/models/data.py /root/project1/src/models/
 #COPY src/models/ /root/project1/models
