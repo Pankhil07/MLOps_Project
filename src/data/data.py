@@ -22,21 +22,17 @@ import re
 # Define these variables at the module level
 #with torch.profiler.profiler(...) as prof:
 # Load configuration from the YAML file
-with initialize(config_path="../../conf"):
-    cfg = compose(config_name="config.yml")
-
-# Access configuration parameters using OmegaConf
-config = OmegaConf.to_container(cfg)
-print("Configuration:")
-print(yaml.dump(config))
-raw_dataset = load_dataset(cfg.dataset_name, f"{cfg.source_language}-{cfg.target_language}")
+config_path = os.path.join('..\\.', "config.yml")
+with open(config_path, "r") as config_file:
+    config = yaml.safe_load(config_file)
+raw_dataset = load_dataset(config["dataset_name"], f"{config['source_language']}-{config['target_language']}")
 #raw_dataset = load_dataset(cfg.dataset_name"opus_books", "en-it")
 metric = load_metric("sacrebleu")
 
-def split_data(raw_dataset,cfg):
-    train_ratio = cfg.train_ratio
-    validation_ratio = cfg.validation_ratio
-    test_ratio = cfg.test_ratio
+def split_data(raw_dataset,config):
+    train_ratio = config["train_ratio"]
+    validation_ratio = config["validation_ratio"]
+    test_ratio = config["test_ratio"]
     # Calculate the number of examples for each split
     all_data = raw_dataset["train"]
     total_examples = len(all_data)
@@ -92,7 +88,7 @@ def split_data(raw_dataset,cfg):
 #print("Testing Set:", len(dataset_dict["test"]))
 
 # Load the tokenizer using the configuration
-tokenizer = AutoTokenizer.from_pretrained(cfg.model_name)
+tokenizer = AutoTokenizer.from_pretrained(config["model_name"])
 
 
 #__all__ = ["train_set", "validation_set", "test_set", "tokenizer"]
