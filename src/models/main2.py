@@ -3,14 +3,17 @@ import os
 from transformers import AutoModelForSeq2SeqLM, DataCollatorForSeq2Seq, Seq2SeqTrainingArguments, Seq2SeqTrainer
 sys.path.append(os.path.join(os.getcwd(), "src"))
 from datasets import load_dataset,Dataset,DatasetDict,load_metric
-from src.models.tokenizer import tokenized_datasets_train,tokenized_datasets_test,tokenizer
+import tokenizer
+from  tokenizer import tokenized_datasets_train,tokenized_datasets_test,tokenizer
 import torch
 import wandb
 import yaml
 # Get the directory of the current script
 
 # Load configuration form YAML file
-config_path = os.path.join('.', "config.yml")
+script_dir = os.path.dirname(os.path.abspath(__file__))
+config_path = os.path.join(script_dir, "config.yml")
+#config_path = os.path.join('', "config.yml")
 with open(config_path, "r") as config_file:
     config = yaml.safe_load(config_file)
 

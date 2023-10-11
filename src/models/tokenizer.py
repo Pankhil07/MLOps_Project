@@ -12,14 +12,17 @@ from transformers import AutoTokenizer
 #sys.path.append(os.path.join(os.getcwd(), config['src_path']))
 #from src.data.data import tokenizer, train_set,test_set,validation_set,raw_dataset
 import yaml
-from src.data.data import split_data
+import data
+from data import split_data
 #train_set,validation_set,test_set  = split_data()
 #tokenizer, train_set, validation_set, test_set = main()
 # Get the directory of the current script
 #script_dir = os.path.dirname(os.path.abspath(__file__))
 #parent_dir = os.path.dirname(script_dir)
 # Load configuration form YAML file
-config_path = os.path.join('.', "config.yml")
+script_dir = os.path.dirname(os.path.abspath(__file__))
+config_path = os.path.join(script_dir, "config.yml")
+#config_path = os.path.join('', "config.yml")
 with open(config_path, "r") as config_file:
     config = yaml.safe_load(config_file)
 from datasets import load_dataset,Dataset,DatasetDict,load_metric
