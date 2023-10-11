@@ -16,7 +16,7 @@ COPY ./requirements.txt /.
 
 
 #COPY ./data /.
-#COPY ./setup.py /.
+COPY ./setup.py /.
 
 
 # Installs pip.
