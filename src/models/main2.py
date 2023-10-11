@@ -10,7 +10,7 @@ import yaml
 # Get the directory of the current script
 
 # Load configuration form YAML file
-config_path = os.path.join('..\\.', "config.yml")
+config_path = os.path.join('.', "config.yml")
 with open(config_path, "r") as config_file:
     config = yaml.safe_load(config_file)
 

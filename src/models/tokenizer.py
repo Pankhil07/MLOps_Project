@@ -19,7 +19,7 @@ from src.data.data import split_data
 #script_dir = os.path.dirname(os.path.abspath(__file__))
 #parent_dir = os.path.dirname(script_dir)
 # Load configuration form YAML file
-config_path = os.path.join('..\\.', "config.yml")
+config_path = os.path.join('.', "config.yml")
 with open(config_path, "r") as config_file:
     config = yaml.safe_load(config_file)
 from datasets import load_dataset,Dataset,DatasetDict,load_metric

@@ -22,7 +22,7 @@ import re
 # Define these variables at the module level
 #with torch.profiler.profiler(...) as prof:
 # Load configuration from the YAML file
-config_path = os.path.join('..\\.', "config.yml")
+config_path = os.path.join('.', "config.yml")
 with open(config_path, "r") as config_file:
     config = yaml.safe_load(config_file)
 raw_dataset = load_dataset(config["dataset_name"], f"{config['source_language']}-{config['target_language']}")
