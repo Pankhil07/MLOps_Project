@@ -8,13 +8,11 @@ import torch
 import wandb
 import yaml
 # Get the directory of the current script
-script_dir = os.path.dirname(os.path.abspath(__file__))
-parent_dir = os.path.dirname(script_dir)
+
 # Load configuration form YAML file
-config_path = os.path.join(parent_dir, "config.yml")
+config_path = os.path.join('..\\.', "config.yml")
 with open(config_path, "r") as config_file:
     config = yaml.safe_load(config_file)
-
 
 if torch.cuda.is_available():
     device = "cuda"
@@ -37,7 +35,7 @@ wandb.login(key="51444d17389535db95f0e83e403f2080038ccfc5")
 batch_size = config["batch_size"]
 model_name = model_checkpoint.split("/")[-1]
 args = Seq2SeqTrainingArguments(
-    f"{model_name}-finetuned-{cfg.source_language}-to-{cfg.target_language}",
+    f"{model_name}-finetuned-{config['source_language']}-to-{config['target_language']}",
     evaluation_strategy = "epoch",
     learning_rate=2e-5,
     per_device_train_batch_size=batch_size,
