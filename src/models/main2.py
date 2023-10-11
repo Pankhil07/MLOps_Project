@@ -35,15 +35,23 @@ wandb.login(key="51444d17389535db95f0e83e403f2080038ccfc5")
 batch_size = config["batch_size"]
 model_name = model_checkpoint.split("/")[-1]
 args = Seq2SeqTrainingArguments(
-    f"{model_name}-finetuned-{config['source_language']}-to-{config['target_language']}",
-    evaluation_strategy = "epoch",
+    report_to = ['wandb'],
+    output_dir = f"{model_name}-finetuned-{config['source_language']}-to-{config['target_language']}",
+    evaluation_strategy = "steps",
     learning_rate=2e-5,
+    max_steps = 5,
+    logging_steps = 5,
+    eval_steps = 5,
+    save_steps = 5,
     per_device_train_batch_size=batch_size,
     per_device_eval_batch_size=batch_size,
     weight_decay=config["weight_decay"],
     save_total_limit=config["save_total_limit"],
     num_train_epochs=config["num_train_epochs"],
-    predict_with_generate=True
+    predict_with_generate=True,
+    load_best_model_at_end = True,
+    metric_for_best_model = 'accuracy',
+    run_name = 'custom_training',
 )
 
 data_collator = DataCollatorForSeq2Seq(tokenizer, model=model)
@@ -63,7 +71,7 @@ def compute_metrics(eval_preds):
     # Some simple post-processing
     decoded_preds, decoded_labels = postprocess_text(decoded_preds, decoded_labels)
     result = metric.compute(predictions=decoded_preds, references=decoded_labels)
-    result = {"bleu": result["score"]}
+    result = {"accuracy": result["score"]}
     prediction_lens = [np.count_nonzero(pred != tokenizer.pad_token_id) for pred in preds]
     result["gen_len"] = np.mean(prediction_lens)
     result = {k: round(v, 4) for k, v in result.items()}
@@ -76,8 +84,11 @@ trainer = Seq2SeqTrainer(
     eval_dataset=tokenized_datasets_test,
     data_collator=data_collator,
     tokenizer=tokenizer,
-    compute_metrics=compute_metrics
-)
+    compute_metrics=compute_metrics,
 
+)
+trainer.evaluate()
 trainer.train()
+
 model.save_pretrained("./model.pt")
+wandb.finish()
