@@ -8,6 +8,7 @@ from  tokenizer import tokenized_datasets_train,tokenized_datasets_test,tokenize
 import torch
 import wandb
 import yaml
+import torch
 # Get the directory of the current script
 
 # Load configuration form YAML file
@@ -28,7 +29,7 @@ metric = load_metric("sacrebleu")
 
 model_checkpoint = os.path.join(os.getcwd(), "opus-mt-en-it")
 # model_checkpoint ="/home/pankhil/PycharmProjects/MLOps/opus-mt-en-it"
-model = AutoModelForSeq2SeqLM.from_pretrained(config["model_name"]).to(device)
+model = AutoModelForSeq2SeqLM.from_pretrained(config["model_name"],torchscript=True).to(device)
 
 
 
@@ -41,7 +42,7 @@ args = Seq2SeqTrainingArguments(
     report_to = ['wandb'],
     output_dir = f"{model_name}-finetuned-{config['source_language']}-to-{config['target_language']}",
     evaluation_strategy = "steps",
-    learning_rate=2e-5,
+    learning_rate=0.001,
     max_steps = 5,
     logging_steps = 5,
     eval_steps = 5,
@@ -92,6 +93,6 @@ trainer = Seq2SeqTrainer(
 )
 trainer.evaluate()
 trainer.train()
-
+traced_model = torch.jit.trace(model,[tokenized_datasets_train,tokenized_datasets_test])
 model.save_pretrained("./model.pt")
 wandb.finish()
