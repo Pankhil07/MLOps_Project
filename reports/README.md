@@ -399,7 +399,7 @@ We also include flake8 test to implement the uniform formatting across the proje
 >
 > Answer:
 
---- question 21 fill here ---
+--- in the figures folder  ---
 
 ### Question 22
 
@@ -415,7 +415,7 @@ We also include flake8 test to implement the uniform formatting across the proje
 >
 > Answer:
 
---- question 22 fill here ---
+--- I was able to deploy the model locally using the custom deployment method. I could not deploy the model on the cloud because of time constraints---
 
 ### Question 23
 
@@ -430,7 +430,7 @@ We also include flake8 test to implement the uniform formatting across the proje
 >
 > Answer:
 
---- question 23 fill here ---
+--- I could not manage to implement monitoring. If implemented it would help in model longetivity and alert me of any errors or ill behaviour of application. ---
 
 ### Question 24
 
@@ -444,7 +444,7 @@ We also include flake8 test to implement the uniform formatting across the proje
 >
 > Answer:
 
---- question 24 fill here ---
+--- 15 ---
 
 ## Overall discussion of project
 
@@ -479,7 +479,7 @@ We also include flake8 test to implement the uniform formatting across the proje
 >
 > Answer:
 
---- question 26 fill here ---
+--- The biggest challenge was my laptop . Its very slow and works badly. Another bug challenge was the time constraint. ---
 
 ### Question 27
 
@@ -496,4 +496,4 @@ We also include flake8 test to implement the uniform formatting across the proje
 >
 > Answer:
 
---- question 27 fill here ---
+--- It was all done by me ---
