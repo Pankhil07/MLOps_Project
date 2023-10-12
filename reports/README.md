@@ -165,8 +165,7 @@ Any new comer if follows above mentioned steps will be able to successfully get 
 > *experiments.*
 > Answer:
 
---- From the cookiecutter template we have filled out most of the folders.We have added .dvc to the repo which include dvc version of our data.We have added .github/workflows which contains yml files to conduct tests.Our main project content lies in the src folder which contains data,training and testing process code along with some results. 
----
+--- From the cookiecutter template we have filled out most of the folders.We have added .dvc to the repo which include dvc version of our data.We have added .github/workflows which contains yml files to conduct tests.Our main project content lies in the src folder which contains data,training and testing process code along with some results. ---
 
 ### Question 6
 
@@ -253,12 +252,12 @@ We also include flake8 test to implement the uniform formatting across the proje
 > Answer length: 200-300 words.
 >
 > Example:
-> *We have organized our CI into 3 separate files: one for doing ..., one for running ... testing and one for running*
+> *We have organized our CI into 3 separate files: one for doing ..., one for running ... testing, and one for running*
 > *... . In particular for our ..., we used ... .An example of a triggered workflow can be seen here: <weblink>*
 >
 > Answer:
 
---- We have organized our CI in 2 steps that is first runnig the tests on the code and then adding the github wokrlfow . An example of triggered workflow is here https://github.com/Pankhil07/MLOps_Project/actions/runs/6481043580/workflow ---
+--- We have organized our CI in 2 steps: first running the tests on the code and then adding the GitHub workflow. An example of triggered workflow is here https://github.com/Pankhil07/MLOps_Project/actions/runs/6481043580/workflow ---
 
 ## Running code and tracking experiments
 
@@ -268,7 +267,7 @@ We also include flake8 test to implement the uniform formatting across the proje
 ### Question 12
 
 > **How did you configure experiments? Did you make use of config files? Explain with coding examples of how you would**
-> **run a experiment.**
+> **run an experiment.**
 >
 > Answer length: 50-100 words.
 >
@@ -277,7 +276,7 @@ We also include flake8 test to implement the uniform formatting across the proje
 >
 > Answer:
 
---- We used configparser and hydra for this purpouse.We had initialized our config files at the start of any scripy so as to easily incofporate it . eg  raw_data = raw_dataset = load_dataset(config["dataset_name"], f"{config['source_language']}-{config['target_language']}")---
+--- We used config parser and hydra for this purpose.We had initialized our config files at the start of any script so as to easily incorporate it . eg  raw_data = raw_dataset = load_dataset(config["dataset_name"], f"{config['source_language']}-{config['target_language']}")---
 
 ### Question 13
 
@@ -292,7 +291,7 @@ We also include flake8 test to implement the uniform formatting across the proje
 >
 > Answer:
 
---- All the dependencies are in requirements.txt and we have used config files to makesure that parameters are correctly incorporated in the script. To reproduce an experiment one would have to just run the trainer.dockerfile. ---
+--- All the dependencies are in requirements.txt and we have used config files to make sure that parameters are correctly incorporated in the script. To reproduce an experiment one would have to just run the trainer.dockerfile. ---
 
 ### Question 14
 
@@ -324,7 +323,7 @@ We also include flake8 test to implement the uniform formatting across the proje
 >
 > Answer:
 
---- For our project we developed trainer docker image for eg :  docker run exp1 trainer:latest  this will create a docker run of our scripts .  ---
+--- For our project we developed a trainer docker image for eg:  docker runs exp1 trainer: latest  this will create a docker run of our scripts.  ---
 
 ### Question 16
 
@@ -339,7 +338,7 @@ We also include flake8 test to implement the uniform formatting across the proje
 >
 > Answer:
 
----For debugging purpouse we used pycharms inbuilt debugger . For profiling we used cProfile and snakeviz to visualize it.  ---
+---For debugging purpose, we used pycharms inbuilt debugger. For profiling, we used cProfile and snakeviz to visualize it.  ---
 
 ## Working in the cloud
 
@@ -356,7 +355,7 @@ We also include flake8 test to implement the uniform formatting across the proje
 >
 > Answer:
 
---- We used Engine and Bucket. Engine is a VM which helps gain GPU access to run our model faster and Buckets are used for data dtorage purpouses. ---
+--- We used an Engine and Bucket. The engine is a VM which helps gain GPU access to run our model faster and Buckets are used for data storage purposes. ---
 
 ### Question 18
 
@@ -371,7 +370,7 @@ We also include flake8 test to implement the uniform formatting across the proje
 >
 > Answer:
 
---- We created an vm instance and then did ssh into it the cloned our repo and ran the dockerfile to run out model. The instances with following hardwarre N1 is GPU for Deep Learning. ---
+--- We created a vm instance and then did ssh into it cloned our repo and ran the dockerfile to run out the model. The instances with the following hardware N1 is GPU for Deep Learning. ---
 
 ### Question 19
 
